@@ -27,14 +27,15 @@
         }
     </style>
 </head>
-<body class="d-flex" style="width: 100%;">
+<body>
 
-<div class="d-flex flex-column float-start" style="height: 100vh; overflow-y: auto;">
-    <button class="btn btn-bd-primary m-2"
-            type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
-            aria-label="Toggle navigation">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
-            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063
+<div class="d-flex" style="width: 100%;">
+    <div class="d-flex flex-column float-start" style="height: 100vh; overflow-y: auto;">
+        <button class="btn btn-bd-primary m-2"
+                type="button" data-bs-toggle="offcanvas" data-bs-target="#table-of-content" aria-controls="table-of-content"
+                aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063
             3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689
             1.782-.886 3.112-.752 1.234.124
             2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8
@@ -42,16 +43,24 @@
             .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019
             3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0
             0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-        </svg>
-    </button>
+            </svg>
+        </button>
+        <button type="button" class="btn btn-bd-primary m-2" data-bs-toggle="modal" data-bs-target="#share">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499
+            2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5
+            0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+            </svg>
+        </button>
+    </div>
+
+    <iframe id="article" class="flex-fill" style="height: 100vh;" src=""></iframe>
 </div>
 
-<iframe id="article" class="flex-fill" style="height: 100vh;" src=""></iframe>
-
 <div class="offcanvas offcanvas-start d-flex flex-column justify-content-between"
-     tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+     tabindex="-1" id="table-of-content" aria-labelledby="table-of-content-label">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Table of content</h5>
+        <h5 class="offcanvas-title" id="table-of-content-label">Table of content</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-fill">
@@ -95,11 +104,33 @@
             , 2023.
         </p>
     </div>
-    <script>
-        function article(url) {
-            document.getElementById('article').src = url;
-        }
-    </script>
 </div>
+
+<div class="modal fade" id="share" tabindex="-1" aria-labelledby="share-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="share-label">Share</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Copy the following article link:</p>
+                <p class="text-primary" id="share-article-link" style="word-break: break-all;"></p>
+                <p class="text-secondary"><i>
+                    If no link appears above, please open an article before clicking the sharing button.
+                </i></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function article(url) {
+        let abs_url = new URL(url, document.baseURI);
+        document.getElementById('article').src = abs_url.href;
+        document.getElementById('share-article-link').innerText = abs_url.href;
+    }
+</script>
+
 </body>
 </html>
