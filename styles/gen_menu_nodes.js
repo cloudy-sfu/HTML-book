@@ -1,9 +1,8 @@
 function generate_node(article, level) {
-    const padding = 0.5 * level;
     let node = `
         <li class="nav-item mb-2">
             <a ${article.filepath ? `href="javascript:article('${article.filepath}')"` : ''} 
-                style="padding: 0.5rem ${padding*2}rem;">
+                style="padding: 0.5rem ${level}rem;">
                 ${article.name}
             </a>
         </li>
