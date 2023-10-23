@@ -1,0 +1,29 @@
+# the name of this book
+title: Example Site
+# the author of this book
+author: cloudy-sfu
+# this book is written in which year
+created_year: 2022
+# articles list
+articles:
+  # each bullet point represents an article
+  - # the title of this article
+    name: Chapter 1
+    # HTML file path of this article. It should be inside the program root. Use relative path.
+    filepath: example/Lorem Ipsum 1.html
+  - name: Chapter 2
+    filepath: example/Lorem Ipsum 2.html
+    # List submodules, sections, chapters, reference, or child-level articles in "subs".
+    sub:
+    - name: Chapter 2.1
+      filepath: example/Lorem Ipsum 2.1.html
+      sub:
+        - name: Chapter 2.1.1
+          filepath: example/Lorem Ipsum 2.1.1.html
+    - name: Chapter 2.2
+      filepath: example/Lorem Ipsum 2.2.html
+  - name: Chapter 3
+    # To provide a title or an empty article (grey link, cannot click into), skip filepath
+    sub:
+      - name: Chapter 3.1
+        filepath: example/Lorem Ipsum 3.1.html
