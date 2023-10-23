@@ -19,22 +19,6 @@
     <link rel="stylesheet" href="styles/left_sidebar.css">
 </head>
 <body>
-<script>
-let menu;
-fetch('menu.yaml')
-    .then(response => {
-        if (!response.ok) {
-            console.error('Fail to get menu.yaml, status text: ' + response.statusText);
-        }
-        return response.text();
-    })
-    .then(menu_text => {
-        menu = jsyaml.load(menu_text);
-    })
-    .catch(error => {
-        console.error('Fail to load menu, error: ', error);
-    });
-</script>
 <div class="container-fluid" style="background-color: #f9f9f9">
     <div class="row">
         <div class="col-md-3 p-3 d-flex flex-column" style="height: 100vh;">
@@ -54,16 +38,30 @@ fetch('menu.yaml')
         </div>
         <!-- End of the sidebar -->
         <div class="col-md-9 p-0 d-flex flex-column" style="height: 100vh;">
-            <iframe class="flex-grow-1" width="100%" id="article" src="about:blank"></iframe>
+            <iframe class="flex-grow-1" width="100%" id="article" src="about:blank">
+            </iframe>
         </div>
     </div>
     <script>
         window.onload = function () {
-            document.querySelector('#book-title').innerText = menu.title;
-            document.querySelector('title').innerText = menu.title;
-            document.querySelector('#created-year').innerText = menu.created_year;
-            document.querySelector('#author').innerText = menu.author;
-            document.querySelector('#articles-list').innerHTML = generate_menu(menu.articles);
+            fetch('menu.yaml')
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Fail to get menu.yaml, status text: ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(menu_text => {
+                    menu = jsyaml.load(menu_text);
+                    document.querySelector('#book-title').innerText = menu.title;
+                    document.querySelector('title').innerText = menu.title;
+                    document.querySelector('#created-year').innerText = menu.created_year;
+                    document.querySelector('#author').innerText = menu.author;
+                    document.querySelector('#articles-list').innerHTML = generate_menu(menu.articles);
+                })
+                .catch(error => {
+                    console.error('Fail to load menu, error: ', error);
+                });
         }
         function article(link) {
             document.getElementById('article').setAttribute('src', link);
